@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agulu Music</title>
+  <link rel="stylesheet" href="sample.css">
+  <style>
+    .options-container button {
+      display: inline-block;
+      margin: 10px;
+    }
+    .options-container {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body style="background-color: #f2f2f2; position: relative;">
+  <div class="container">
+    <div class="menu-toggle" style="position: absolute; top: 20px; left: 20px; cursor: pointer; font-size: 20px; color: #fff; text-align: center; line-height: 7px;">
+      <span style="display:block;">&#8226;</span>
+      <span style="display:block;">&#8226;</span>
+      <span style="display:block;">&#8226;</span>
+    </div>
+    <div class="menu-options" style="position: absolute; top: 50px; left: 10px; background-color: #fff; padding: 10px; border: 1px solid #ddd; display: none; width: 150px; text-align: left;">
+      <a href="#" style="text-decoration: none; color: #333; display: block; padding: 10px; border-bottom: 1px solid #ddd;">Home</a>
+      <a href="#" style="text-decoration: none; color: #333; display: block; padding: 10px; border-bottom: 1px solid #ddd;">New Music</a>
+      <a href="#" style="text-decoration: none; color: #333; display: block; padding: 10px; border-bottom: 1px solid #ddd;">Album</a>
+      <a href="#" style="text-decoration: none; color: #333; display: block; padding: 10px; border-bottom: 1px solid #ddd;">Artist</a>
+      <a href="#" style="text-decoration: none; color: #333; display: block; padding: 10px; border-bottom: 1px solid #ddd;">Trending</a>
+      <a href="#" style="text-decoration: none; color: #333; display: block; padding: 10px;">Contact</a>
+    </div>
+    <header style="background-color: black; color: #fff; padding: 20px; text-align: center;">
+      <h1 id="logo" style="font-size: 36px; font-weight: bold; text-shadow: 2px 2px 5px #000;">AGULU MUSIC</h1>
+    </header>
+    <div class="search-container" style="background-color: silver; padding: 20px; border: 1px solid #ddd;">
+      <input type="text" id="search-input" placeholder="Search" style="width: 70%; height: 30px; padding: 10px; font-size: 16px; border: 1px solid #ccc;">
+      <button id="search-button" style="width: 20%; height: 30px; padding: 10px; font-size: 16px; background-color: #4CAF50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Search</button>
+    </div>
+    <div class="options-container" style="background-color: green; padding: 20px; text-align: center;">
+      <button id="newMusicButton" style="margin: 10px;">New Music</button>
+      <button id="albumButton" style="margin: 10px;">Album</button>
+      <button id="artistButton" style="margin: 10px;">Artist</button>
+      <button id="trendingButton" style="margin: 10px;">Trending</button>
+    </div>
+    <div class="tracks-container">
+      <h2 id="tracks-heading">Various Tracks</h2>
+      <ul id="variousTracks"></ul>
+    </div>
+    <div id="contact-info" style="display: none;font-weight:bold">
+      <p>Call: <a href="tel:+265894126662" style="color: blue; text-decoration: none;">+265 894 12 66 62</a></p>
+        <p>Call: <a href="tel:+265894126662" style="color: blue; text-decoration: none;"> +265 893 95 94 77</a></p>
+  <p>Call: <a href="tel:+265894126662" style="color: blue; text-decoration: none;"> +265 885 90 31 62 </a></p>
+  <p>Whatsapp: <a href="https://wa.me/+265894126662" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: none;">click here!</a> </p>
+  <p>Facebook: <a href="https://www.facebook.com/profile.php?id=100072469151693" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: none;">click here!</a></p>
+  <p style="color:red"> advertisement!! </p>
+  <img src="fn.jpg" alt="Image" style="width: 400px; height: 400px;">
+</div>
+<div id="about-us-info" style="display: none; color: black; font-weight: bold;">
+  <p>Agulu Music Gang is a prominent hip-hop and dancehall group hailing from Baluti ghetto in Blantyre, Malawi. The group comprises of six guys including yatrender the rapper ,prom II, cba ,yoineo, y cee, and add gone. With a strong commitment to fostering talent, the group has established itself as a launchpad for emerging artists. This website serves as a platform dedicated to empowering and entertaining the ghetto youth community.</p>
+  <p style="color:red"> advertisement!! </p>
+  <img src="chowi.jpg" alt="Image" style="width: 400px; height: 400px;">
+</div>
+<div class="footer" style="background-color: black; color: #fff; padding: 30px; text-align: center; position: fixed; bottom: 0; width: 80%;">
+  <a href="#" id="contact-us" style="color: #fff; text-decoration: none; margin-right: 20px;">Contact Us</a>
+  <a href="#" id="about-us" style="color: #fff; text-decoration: none;">About Us</a>
+</div>
+
+</div>
+<div id="options-div"> <!-- Options content here --> </div>
+<div id="song-functionality-div" style="display: none;"> <!-- Song functionality content here --> </div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const menuOptions = document.querySelector(".menu-options");
+  const contactLink = document.querySelector("#contact-us");
+  const contactMenuLink = document.querySelector(".menu-options a:last-child");
+  const contactInfo = document.querySelector("#contact-info");
+  const aboutUsLink = document.querySelector("#about-us");
+  const aboutUsInfo = document.querySelector("#about-us-info");
+  const tracksDiv = document.querySelector(".tracks-container");
+  const homeLink = document.querySelector(".menu-options a:first-child");
+
+  if (menuToggle && menuOptions) {
+    menuToggle.addEventListener("click", function() {
+      menuOptions.style.display = menuOptions.style.display === "block" ? "none" : "block";
+    });
+  }
+
+  if (contactLink && contactInfo && tracksDiv) {
+    contactLink.addEventListener("click", function(event) {
+      event.preventDefault();
+      tracksDiv.style.display = "none";
+      aboutUsInfo.style.display = "none";
+      contactInfo.style.display = "block";
+      contactInfo.style.height = "100vh";
+      const optionsContainer = document.querySelector(".options-container");
+      optionsContainer.innerHTML = "<h2 style='font-size: 36px; text-align: center;'>CONTACT US</h2>";
+    });
+  }
+
+  if (contactMenuLink && contactInfo && tracksDiv) {
+    contactMenuLink.addEventListener("click", function(event) {
+      event.preventDefault();
+      tracksDiv.style.display = "none";
+      aboutUsInfo.style.display = "none";
+      contactInfo.style.display = "block";
+      contactInfo.style.height = "100vh";
+      const optionsContainer = document.querySelector(".options-container");
+      optionsContainer.innerHTML = "<h2 style='font-size: 36px; text-align: center;'>CONTACT US</h2>";
+    });
+  }
+
+  if (aboutUsLink && aboutUsInfo && tracksDiv) {
+    aboutUsLink.addEventListener("click", function(event) {
+      event.preventDefault();
+      tracksDiv.style.display = "none";
+      contactInfo.style.display = "none";
+      aboutUsInfo.style.display = "block";
+      aboutUsInfo.style.height = "100vh";
+      const optionsContainer = document.querySelector(".options-container");
+      optionsContainer.innerHTML = "<h2 style='font-size: 36px; text-align: center;'>ABOUT US</h2>";
+    });
+  }
+
+  if (homeLink) {
+    homeLink.addEventListener("click", function(event) {
+      event.preventDefault();
+      window.scrollTo(0, 0);
+      contactInfo.style.display = "none";
+      aboutUsInfo.style.display = "none";
+      tracksDiv.style.display = "block";
+      menuOptions.style.display = "none";
+      const optionsContainer = document.querySelector(".options-container");
+      optionsContainer.innerHTML = `<button id="newMusicButton" style="margin: 10px;">New Music</button> <button id="albumButton" style="margin: 10px;">Album</button> <button id="artistButton" style="margin: 10px;">Artist</button> <button id="trendingButton" style="margin: 10px;">Trending</button>`;
+      displaySongs(musicData); // Call displaySongs to reset the track list
+    });
+  }
+
+  const musicData = [
+    {
+      title: "Freestyle",
+      artist: "Agulu",
+      album: "Freestyle Session",
+      release: "2021",
+      duration: "2:50",
+      producer: "Agulu Music",
+      genre: "Rap",
+      file: "song3.mp3"
+    },
+    {
+      title: "Umvere Agulu",
+      artist: "Agulu",
+      album: "Agulu Music",
+      release: "2020",
+      duration: "3:45",
+      producer: "Agulu Productions",
+      genre: "Hip-Hop",
+      file: "agulu.mp3"
+    },
+    {
+      title: "Ife Ndi Ana A Mtown",
+      artist: "Agulu",
+      album: "Mtown Vibes",
+      release: "2019",
+      duration: "4:10",
+      producer: "Mtown Records",
+      genre: "Afrobeat",
+      file: "song2.mp3"
+    }
+    // Add more songs here...
+  ];
+
+function displaySongs(songs) {
+    const songList = document.getElementById("variousTracks");
+    if (songList) {
+      songList.innerHTML = "";
+      if (songs.length === 0) {
+        const errorMessage = document.createElement("p");
+        errorMessage.textContent = "Sorry, no songs found matching your search query.";
+        errorMessage.style.color = "red";
+  songList.appendChild(errorMessage);
+  } else {
+    songs.forEach(song => {
+      const songElement = document.createElement("li");
+      const songLink = document.createElement("a");
+      songLink.href = "#";
+      songLink.textContent = `${song.title} by ${song.artist}`;
+      songLink.addEventListener("click", function() {
+        displaySongDetails(song);
+      });
+      songElement.appendChild(songLink);
+      songList.appendChild(songElement);
+    });
+  }
+} else {
+  console.error("Element with ID variousTracks not found");
+}
+
+}
+
+function displaySongDetails(song) {
+const songListDiv = document.getElementById("variousTracks");
+const optionsDiv = document.getElementById("options-div");
+const heading = document.createElement("h1");
+heading.textContent = "Various Tracks";
+optionsDiv.appendChild(heading);
+songListDiv.innerHTML = `<div> <h2>${song.title}</h2> <p>Artist: ${song.artist}</p> <p>Album: ${song.album}</p> <p>Release: ${song.release}</p> <p>Duration: ${song.duration}</p> <p>Producer: ${song.producer}</p> <p>Genre: ${song.genre}</p> <audio id="audio-element" controls> <source src="${song.file}" type="audio/mp3"> Your browser does not support the audio element. </audio> <button id="play-button">Play Music</button> <button id="pause-button">Pause Music</button> </div>`;
+const playButton = document.getElementById("play-button");
+const pauseButton = document.getElementById("pause-button");
+const audioElement = document.getElementById("audio-element");
+playButton.addEventListener("click", function() {
+audioElement.play();
+});
+pauseButton.addEventListener("click", function() {
+audioElement.pause();
+});
+}
+
+const searchInput = document.getElementById("search-input");
+const searchButton = document.getElementById("search-button");
+
+searchButton.addEventListener("click", function() {
+const searchTerm = searchInput.value.toLowerCase();
+const filteredSongs = musicData.filter(song => {
+return (
+song.title.toLowerCase().includes(searchTerm) ||
+song.artist.toLowerCase().includes(searchTerm) ||
+song.album.toLowerCase().includes(searchTerm) ||
+song.producer.toLowerCase().includes(searchTerm) ||
+song.genre.toLowerCase().includes(searchTerm)
+);
+});
+displaySongs(filteredSongs);
+});
+
+displaySongs(musicData);
+})
+</script>
+</body>
+</html>
+
+Don
